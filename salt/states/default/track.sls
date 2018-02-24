@@ -1,0 +1,4 @@
+
+{{ sls }}.cleanup:
+  track:
+    - cleanup
