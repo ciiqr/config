@@ -94,6 +94,15 @@
     - group: {{ root.group() }}
     - mode: 644
 
+{{ sls }}.{{ zsh_etc_path }}/zshenv:
+  file.managed:
+    - name: {{ zsh_etc_path }}/zshenv
+    - source: salt://{{ slspath }}/files/zshenv
+    - makedirs: true
+    - user: {{ root.user() }}
+    - group: {{ root.group() }}
+    - mode: 644
+
 {% endif %}
 
 {% if not platform in ['windows', 'osx'] %}
