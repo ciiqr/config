@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+set -e
+
+forrealz(){ realpath "$@" 2>/dev/null || readlink -f "$@" 2>/dev/null || perl -e 'use File::Basename; use Cwd "abs_path"; print abs_path(@ARGV[0]);' -- "$@"; }
+srcDir="$(dirname "$(forrealz "${BASH_SOURCE[0]}")")"
+
+. "$srcDir/include/common.sh"
+
+parse_cli_args "$@" || usage "$0"
+
+# TODO: might make sense to always run as root and handle user stuff as we do with salt
+
+# create ansible directory
+sudo mkdir -p "$ansibleDir"
+
+
+# setup configs
+
+# files
+sudo cp "$srcDir/../ansible/hosts" "$ansibleDir/hosts"
+
+sudo tee "$ansibleDir/ansible.cfg" > /dev/null <<EOF
+[defaults]
+roles_path = $configDir/ansible/roles${privateConfigDir:+:$privateConfigDir/ansible/roles}
+retry_files_enabled = False
+EOF
+
+# # determine primary user, if detected user is root, try using the existing primaryUser
+# if [[ -z "$primaryUser" ]]; then
+#     primaryUser="$(salt-call grains.get primaryUser --out newline_values_only)"
+#     if [[ -z "$primaryUser" ]]; then
+#         primaryUser="$(logname)"
+#     fi
+# fi
+
+# # set config/private-config dirs
+# salt-call grains.set configDir "$configDir" --out quiet
+# salt-call grains.set privateConfigDir "$privateConfigDir" --out quiet
+
+# # set user
+# salt-call grains.set primaryUser "$primaryUser" --out quiet
+
+# setup machine/roles
+if [[ -n "$machine" ]]; then
+    sudo mkdir -p "$ansibleDir/facts.d"
+    echo -n "{\"name\": \"$machine\"}"$'\n' | sudo tee "$ansibleDir/facts.d/machine.fact" >/dev/null
+# elif [[ -n "$roles" ]] || ! machineMatches; then
+#     # use existing if none specified
+#     if [[ -z "$roles" ]]; then
+#         roles="$existing_roles"
+#     fi
+
+#     # set roles
+#     for role in $roles; do
+#          salt-call grains.append roles "$role" --out quiet
+#     done
+fi
+
+# # apply bootstrap state (for installing package managers and such)
+# salt-call state.apply bootstrap

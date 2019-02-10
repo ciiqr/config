@@ -1,0 +1,38 @@
+- hosts: all
+  vars:
+    platforms:
+      Linux: linux
+      Win32NT: windows
+      Darwin: osx
+  tasks:
+  # Platform
+  - name: Platform Group
+    group_by: key={{ platforms[ansible_system] }}
+    register: platform
+  - name: Register Platform
+    set_fact:
+      platform: '{{ platform.add_group }}'
+
+  # OS Family
+  - name: OS Family Group
+    group_by: key={{ ansible_os_family | lower }}
+    register: os_family
+  - name: Register OS Family
+    set_fact:
+      os_family: '{{ os_family.add_group }}'
+
+  # Distribution
+  - name: Distribution Group
+    group_by: key={{ ansible_distribution | lower }}
+    register: distribution
+  - name: Register Distribution
+    set_fact:
+      distribution: '{{ distribution.add_group }}'
+
+  # Machine
+  - name: Machine Group
+    group_by: key={{ ansible_local.machine.name }}
+    register: machine
+  - name: Register Machine
+    set_fact:
+      machine: '{{ machine.add_group }}'

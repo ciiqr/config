@@ -1,0 +1,5 @@
+# TODO: something useful
+- name: Test file for Linux
+  copy:
+    content: "Hellow Test Files\n"
+    dest: "~/test-ansible-file"

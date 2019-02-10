@@ -1,0 +1,13 @@
+- hosts: "linux"
+  gather_facts: no
+  roles:
+    - "linux"
+# TODO: implement
+# - hosts: "windows"
+#   gather_facts: no
+#   roles:
+#     - "windows"
+# - hosts: "osx"
+#   gather_facts: no
+#   roles:
+#     - "osx"

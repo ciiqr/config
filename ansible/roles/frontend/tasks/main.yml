@@ -1,0 +1,5 @@
+# TODO: something useful
+- name: Test file for Frontend
+  copy:
+    content: "Test file for Frontend\n"
+    dest: "~/test-ansible-frontend-file"

@@ -1,0 +1,4 @@
+- hosts: "void"
+  gather_facts: no
+  roles:
+    - "void"

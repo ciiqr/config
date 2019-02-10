@@ -1,0 +1,27 @@
+- hosts: laptop-william
+  gather_facts: no
+  roles:
+    - base
+    # - ssh
+    # - gpg
+    - frontend
+    # - sublime
+    # - quick-launch
+    # - development
+    # - hidpi
+    # - laptop-william
+
+- hosts: desktop-william
+  gather_facts: no
+  roles:
+    - base
+    # - ssh
+    # - gpg
+    - frontend
+    # - sublime
+    # - quick-launch
+    # - development
+    # - gaming
+    # - desktop-william
+
+# TODO: include playbook from private repo (will need path)

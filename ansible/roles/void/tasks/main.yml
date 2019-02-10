@@ -1,0 +1,5 @@
+# TODO: something useful
+- name: Test file for void
+  copy:
+    content: "Test file for void\n"
+    dest: "~/test-ansible-void-file"

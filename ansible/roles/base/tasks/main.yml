@@ -1,0 +1,8 @@
+- import_role:
+    name: private-base
+
+# TODO: something useful
+- name: Test file for Base
+  copy:
+    content: "Test file for Base\n"
+    dest: "~/test-ansible-base-file"
