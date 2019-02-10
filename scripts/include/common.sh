@@ -1,6 +1,6 @@
 usage()
 {
-    echo "usage: $1 [--force] [--link|--copy] [--machine <machine>] [--roles <roles>] [--configDir <configDir>] [--privateConfigDir <privateConfigDir>] [--saltDir <saltDir>] [--primaryUser <primaryUser>]" 1>&2
+    echo "usage: $1 [--force] [--link|--copy] [--machine <machine>] [--roles <roles>] [--configDir <configDir>] [--privateConfigDir <privateConfigDir>] [--saltDir <saltDir>] [--ansibleDir <ansibleDir>] [--primaryUser <primaryUser>]" 1>&2
     exit 1
 }
 
@@ -11,6 +11,7 @@ set_cli_args_default()
     configDir="/config"
     privateConfigDir="/config-private"
     saltDir="/etc/salt"
+    ansibleDir="/etc/ansible"
     machine=""
     roles=""
     primaryUser=""
@@ -38,6 +39,10 @@ parse_cli_args()
             ;;
             --saltDir)
                 saltDir="${2%/}"
+                shift
+            ;;
+            --ansibleDir)
+                ansibleDir="${2%/}"
                 shift
             ;;
             --machine)
