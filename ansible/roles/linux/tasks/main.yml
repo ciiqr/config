@@ -2,4 +2,4 @@
 - name: Test file for Linux
   copy:
     content: "Hellow Test Files\n"
-    dest: "~/test-ansible-file"
+    dest: "~/test-ansible-file-linux"

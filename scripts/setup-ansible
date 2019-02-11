@@ -24,6 +24,7 @@ sudo tee "$ansibleDir/ansible.cfg" > /dev/null <<EOF
 [defaults]
 roles_path = $configDir/ansible/roles${privateConfigDir:+:$privateConfigDir/ansible/roles}
 retry_files_enabled = False
+hash_behaviour = merge
 EOF
 
 # # determine primary user, if detected user is root, try using the existing primaryUser
