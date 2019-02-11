@@ -1,27 +1,22 @@
-- hosts: laptop-william
+- hosts: all
   gather_facts: no
   roles:
-    - base
-    # - ssh
-    # - gpg
-    - frontend
-    # - sublime
-    # - quick-launch
-    # - development
-    # - hidpi
-    # - laptop-william
-
-- hosts: desktop-william
-  gather_facts: no
-  roles:
-    - base
-    # - ssh
-    # - gpg
-    - frontend
-    # - sublime
-    # - quick-launch
-    # - development
-    # - gaming
-    # - desktop-william
-
-# TODO: include playbook from private repo (will need path)
+    # Platforms
+    - { role: linux, when: platform == 'linux' }
+    # - { role: osx, when: platform == 'osx' }
+    # - { role: windows, when: platform == 'windows' }
+    # OS
+    # - { role: ubuntu, when: distribution == 'ubuntu' }
+    # - { role: void, when: distribution == 'void' }
+    # Roles
+    - { role: base, when: "'base' in roles" }
+    # - { role: ssh, when: "'ssh' in roles" }
+    # - { role: gpg, when: "'gpg' in roles" }
+    - { role: frontend, when: "'frontend' in roles" }
+    # - { role: sublime, when: "'sublime' in roles" }
+    # - { role: quick-launch, when: "'quick-launch' in roles" }
+    # - { role: development, when: "'development' in roles" }
+    # - { role: hidpi, when: "'hidpi' in roles" }
+    # Machine
+    # - { role: laptop-william, when: machine == 'laptop-william' }
+    # - { role: desktop-william, when: machine == 'desktop-william' }

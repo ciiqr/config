@@ -1,4 +1,3 @@
 - import_playbook: groups.yml
-- import_playbook: platforms.yml
 - import_playbook: distributions.yml
 - import_playbook: machines.yml
