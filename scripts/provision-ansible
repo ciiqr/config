@@ -2,14 +2,19 @@
 
 set -e
 
+# TODO: consider a way of toggling this off
+export ANSIBLE_STDOUT_CALLBACK=actionable
+
+ansible-playbook /config/ansible/all.yml "$@"
+
 # NOTE: var's don't get loaded from roles that don't get loaded... so we can't rely on that & support running single roles (maybe this is a justification for making roles also into groups... but then how do we reduce duplication...)
 # If first param doesn't start with '-', assume it's a role name to be run individually
 # if [[ -n "$1" && "$1" != "-"* ]]; then
 #     # run role and, pass along any other params
 #     ansible all -m include_role -a name="$1" "${@:2}"
 # else
-    # pass along all params
-    ansible-playbook /config/ansible/all.yml "$@"
+#     # pass along all params
+#     ansible-playbook /config/ansible/all.yml "$@"
 # fi
 # TODO: get rid of hard-coded path
 

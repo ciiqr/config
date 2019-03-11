@@ -1,0 +1,53 @@
+# hostname
+- name: Hostname - Common
+  hostname:
+    name: '{{ hostname }}'
+  when: platform != 'windows' and distribution != 'void'
+
+- name: Hostname - Windows
+  win_hostname:
+    name: '{{ hostname }}'
+  when: platform == 'windows'
+
+- name: Hostname - Void
+  copy:
+    content: '{{ hostname }}'
+    dest: /etc/hostname
+    owner: root
+    group: root
+    mode: 0644
+  when: distribution == 'void'
+
+# timezone
+- name: Timezone - Common
+  timezone:
+    name: '{{ timezone }}'
+    hwclock: UTC
+  when: platform != 'windows' and distribution != 'void'
+
+- name: Timezone - Windows
+  win_timezone:
+    timezone: '{{ win_timezone }}'
+  when: platform == 'windows'
+
+# TODO: write file
+# - name: Timezone - Void
+#   timezone:
+#     name: '{{ timezone }}'
+#     hwclock: UTC
+#   when: distribution == 'void'
+
+# TODO: locale
+# TODO: why no module...
+- name: Locale - Common
+  copy:
+    content: |
+      LANG=en_CA.UTF-8
+      LC_COLLATE=C
+    dest: /etc/locale.conf
+    owner: root
+    group: root
+    mode: 0644
+  when: platform != 'windows'
+
+# TODO: user
